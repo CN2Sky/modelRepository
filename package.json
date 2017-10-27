@@ -14,7 +14,9 @@
     "jsonwebtoken": "^7.2.1",
     "method-override": "~2.3.5",
     "mongoose": "4.7.4",
-    "morgan": "~1.6.1"
+    "morgan": "~1.6.1",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2"
   },
   "license": "ISC"
 }
