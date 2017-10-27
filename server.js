@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var config = require('./config/database');
 var rp = require('request-promise');
-var port = process.env.PORT || 8085;
+var port = process.env.PORT || 9092;
 var request = require('request');
 
 var Model  = require('./models/Model');
