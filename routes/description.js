@@ -9,7 +9,7 @@ module.exports = function (app) {
             createdBy: req.body.user,
             createdOn: new Date(),
             name: req.body.name,
-            docker: req.body.docker,
+            docker: JSON.parse(req.body.docker),
             domain: req.body.domain,
             yaml: req.body.yaml,
             inputType: req.body.inputType,
@@ -33,6 +33,14 @@ module.exports = function (app) {
     app.delete('/description/:id', function (req, res) {
 
         Description.findByIdAndRemove(req.params.id, function (err, response) {
+            res.send(response);
+            if (err) throw err;
+        });
+    });
+
+    app.get('/description/:id', function (req, res) {
+
+        Description.findById(req.params.id, function (err, response) {
             res.send(response);
             if (err) throw err;
         });

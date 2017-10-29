@@ -1,16 +1,29 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+let mongoose = require('mongoose');
+let Schema = mongoose.Schema;
 
-var modelParameters = new Schema({
+let modelParameters = new Schema({
     parameter: String,
     defaultValue: String
 });
 
-var Description = new Schema({
+
+let docker = new Schema({
+    user: String,
+    name: String,
+    namespace: String,
+    description: String,
+    is_private: Boolean,
+    is_automated: Boolean,
+    can_edit: Boolean,
+    last_updated: Date
+});
+
+
+let Description = new Schema({
     createdBy: { type: String},
     createdOn: { type: Date},
     name:  {type: String, unique: true },
-    docker: { type: String},
+    docker: docker,
     domain: { type: String},
     yaml: { type: String},
     inputType: { type: String},
