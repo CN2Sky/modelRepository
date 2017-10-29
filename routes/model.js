@@ -5,42 +5,9 @@ module.exports = function (app) {
     let querystring = require('querystring');
 
 
-    app.post('/model/create', function (req, res) {
-
-        let model = new Model({
-            name: req.body.name,
-            description: req.body.description,
-            createdOn: new Date(),
-            createdBy: req.body.createdBy,
-            trainedOn: req.body.trainedOn,
-            accuracy: req.body.accuracy,
-            domain: req.body.domain,
-            model: req.body.model,
-            inputType: req.body.inputType,
-            inputDimensions: req.body.inputDimensions,
-            modelParameters: req.body.modelParameters
-        });
-
-        model.save(function (err) {
-            if (err) {
-                res.json({success: false});
-            }
-            else {
-                res.json({success: true});
-            }
-
-        });
-    });
-
     app.post('/model/train', function (req, res) {
 
-        let form = {
-            training_data: req.body.modelParameters.training_data.toString(),
-            epoche: req.body.modelParameters.epoche.toString(),
-            target_data: req.body.modelParameters.target_data.toString()
-        };
-
-        let formData = querystring.stringify(form);
+        let formData = querystring.stringify(req.body.modelParameters);
         let contentLength = formData.length;
 
 
@@ -53,7 +20,36 @@ module.exports = function (app) {
             body: formData,
             method: 'POST'
         }, function (err, response, body) {
-            res.send(body);
+
+
+            let model = new Model({
+                name: req.body.name,
+                descriptionId: req.body.descriptionId,
+                trainedBy: req.body.trainedBy,
+                trainedOn : new Date(),
+                endpoint: req.body.endpoint,
+                accuracy: req.body.accuracy,
+                modelParameters: req.body.modelParameters,
+                model: JSON.parse(body)
+            });
+
+
+            model.save(function (err) {
+                if (err) {
+                    res.json({success: false});
+                }
+                else {
+                    res.json({success: true});
+                }
+
+            });
+        });
+    });
+
+
+    app.get('/models/:descriptionId', function (req, res) {
+        Model.find({descriptionId: req.params.descriptionId}, function (err, models) {
+            res.json(models);
         });
     });
 
@@ -62,6 +58,7 @@ module.exports = function (app) {
             res.json(models);
         });
     });
+
 
 
 };

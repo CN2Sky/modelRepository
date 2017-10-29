@@ -58,4 +58,10 @@ module.exports = function (app) {
             });
         }
     });
+
+    app.get('/description/update/:id/:property/:change', function (req, res) {
+        Description.update({_id: req.params.id}, {$set: {[req.params.property]: req.params.change}}, function (err, models) {
+            res.json(models);
+        });
+    });
 };
