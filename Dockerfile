@@ -1,8 +1,7 @@
-FROM alpine
-RUN apk update && apk upgrade
-RUN apk add nodejs
+FROM node:7
 WORKDIR /app
-ADD . /app
+COPY package.json .
 RUN npm install
+COPY . /app
+CMD node server.js
 EXPOSE 8080
-ENTRYPOINT [ "node", "server.js" ]
