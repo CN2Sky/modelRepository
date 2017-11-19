@@ -26,7 +26,7 @@ module.exports = function (app) {
                 name: req.body.name,
                 descriptionId: req.body.descriptionId,
                 trainedBy: req.body.trainedBy,
-                trainedOn : new Date(),
+                trainedOn: new Date(),
                 endpoint: req.body.endpoint,
                 accuracy: req.body.accuracy,
                 modelParameters: req.body.modelParameters,
@@ -46,10 +46,45 @@ module.exports = function (app) {
         });
     });
 
+    app.post('/model/test', function (req, res) {
+
+        Model.findById(req.body.modelId, function (err, model) {
+            console.log(req.body);
+
+            let requestedParams = [{model : model.model}, {testing_data : req.body.testing_data}];
+
+            // requestedParams.model = model.model ;
+            // requestedParams.testing_data = req.body.testing_data;
+            let formData = querystring.stringify(requestedParams);
+            let contentLength = formData.length;
+
+            request({
+                headers: {
+                    'Content-Length': contentLength,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                uri: model.endpoint + "/test",
+                body: formData,
+                method: 'POST'
+            }, function (err, response, body) {
+
+
+                res.send(body);
+            });
+        });
+
+    });
+
 
     app.get('/models/:descriptionId', function (req, res) {
         Model.find({descriptionId: req.params.descriptionId}, function (err, models) {
             res.json(models);
+        });
+    });
+
+    app.get('/models/id/:modelId', function (req, res) {
+        Model.findById(req.params.modelId, function (err, model) {
+            res.json(model);
         });
     });
 
@@ -58,7 +93,6 @@ module.exports = function (app) {
             res.json(models);
         });
     });
-
 
 
 };
