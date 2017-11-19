@@ -1,6 +1,15 @@
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
+
+let test = new Schema({
+    user : String,
+    testing_data : String,
+    result: String,
+    createdOn : Date
+});
+
+
 let Model = new Schema({
     name : String,
     descriptionId : String,
@@ -9,7 +18,8 @@ let Model = new Schema({
     accuracy: String,
     model: {},
     endpoint: String,
-    modelParameters: {}
+    modelParameters: {},
+    tests: [test]
 });
 
 // set up a mongoose model and pass it using module.exports

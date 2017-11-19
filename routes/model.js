@@ -30,7 +30,8 @@ module.exports = function (app) {
                 endpoint: req.body.endpoint,
                 accuracy: req.body.accuracy,
                 modelParameters: req.body.modelParameters,
-                model: JSON.parse(body)
+                model: JSON.parse(body),
+                tests: []
             });
 
 
@@ -49,27 +50,26 @@ module.exports = function (app) {
     app.post('/model/test', function (req, res) {
 
         Model.findById(req.body.modelId, function (err, model) {
-            console.log(req.body);
-
-            let requestedParams = [{model : model.model}, {testing_data : req.body.testing_data}];
-
-            // requestedParams.model = model.model ;
-            // requestedParams.testing_data = req.body.testing_data;
-            let formData = querystring.stringify(requestedParams);
-            let contentLength = formData.length;
-
             request({
                 headers: {
-                    'Content-Length': contentLength,
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
                 uri: model.endpoint + "/test",
-                body: formData,
+                form: {'testing_data': req.body.testing_data, 'model': JSON.stringify(model.model)},
                 method: 'POST'
             }, function (err, response, body) {
 
+                let test = {
+                    user : req.body.user,
+                    testing_data : req.body.testing_data,
+                    result: body,
+                    createdOn: new Date()
+                };
 
-                res.send(body);
+                Model.update( { _id: req.body.modelId }, { $push: { tests: test } } , function(err, doc){
+                    if (err) return res.send(500, { error: err });
+                    return res.send(doc);
+                });
             });
         });
 
