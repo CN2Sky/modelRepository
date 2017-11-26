@@ -20,16 +20,17 @@ let docker = new Schema({
 
 
 let Description = new Schema({
-    createdBy: { type: String},
-    createdOn: { type: Date},
-    name:  {type: String, unique: true },
+    createdBy: {type: String},
+    createdOn: {type: Date},
+    name: {type: String, unique: true},
     docker: docker,
-    domain: { type: String},
-    yaml: { type: String},
-    inputType: { type: String},
-    inputDimensions: { type: String},
+    domain: {type: String},
+    yaml: {type: String},
+    inputType: {type: String},
+    inputDimensions: {type: String},
     modelParameters: [modelParameters],
-    isRunning: { type: Boolean }
+    isRunning: {type: Boolean},
+    isPublic: {type: Boolean}
 });
 
 // set up a mongoose model and pass it using module.exports

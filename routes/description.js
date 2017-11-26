@@ -15,7 +15,8 @@ module.exports = function (app) {
             inputType: req.body.inputType,
             inputDimensions: req.body.inputDimensions,
             modelParameters: req.body.modelParameters,
-            isRunning: false
+            isRunning: false,
+            isPublic: false
         });
 
 
@@ -47,16 +48,17 @@ module.exports = function (app) {
     });
 
 
-    app.get('/descriptions/:user/:usertype', function (req, res) {
-        if(req.params.usertype === "admin") {
-            Description.find({}, function (err, models) {
+    app.post('/descriptions/:from/:limit', function (req, res) {
+        console.log(req.body);
+            Description.find(req.body, function (err, models) {
                 res.json(models);
-            });
-        } else {
-            Description.find({createdBy: req.params.user}, function (err, models) {
+            }).skip(parseInt(req.params.from)).limit(parseInt(req.params.limit));
+    });
+
+    app.post('/descriptions/running/:from/:limit', function (req, res) {
+            Description.find({isRunning : true, isPublic: true}, function (err, models) {
                 res.json(models);
-            });
-        }
+            }).skip(parseInt(req.params.from)).limit(parseInt(req.params.limit));
     });
 
     app.get('/description/update/:id/:property/:change', function (req, res) {
