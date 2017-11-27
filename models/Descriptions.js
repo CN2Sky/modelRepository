@@ -22,13 +22,15 @@ let docker = new Schema({
 let Description = new Schema({
     createdBy: {type: String},
     createdOn: {type: Date},
-    name: {type: String, unique: true},
+    name: {type: String},
     docker: docker,
     domain: {type: String},
     yaml: {type: String},
     inputType: {type: String},
     inputDimensions: {type: String},
     modelParameters: [modelParameters],
+    endpoint: String,
+    isCloudify: Boolean,
     isRunning: {type: Boolean},
     isPublic: {type: Boolean}
 });

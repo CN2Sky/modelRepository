@@ -19,7 +19,9 @@ let Model = new Schema({
     model: {},
     endpoint: String,
     modelParameters: {},
-    tests: [test]
+    tests: [test],
+    isCopy: Boolean,
+    copiedBy: {type: String}
 });
 
 // set up a mongoose model and pass it using module.exports
