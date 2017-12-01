@@ -69,13 +69,27 @@ module.exports = function (app) {
     });
 
     app.post('/description/run/instance/:id', function (req, res) {
-        // CLOUDIFY DEPLOYMENT !!!!!!!
+        // TODO CLOUDIFY DEPLOYMENT  !!!!!!!
         Description.update({_id: req.params.id}, {$set: req.body}, function (err, models) {
             res.json(models);
         });
 
     });
 
+    app.post('/description/stop/instance/:id', function (req, res) {
+        // TODO CLOUDIFY STOP DEPLOYMENT  !!!!!!!
+
+        let params = {
+            isRunning: false,
+            isCloudify: null,
+            endpoint: null
+        };
+
+        Description.update({_id: req.params.id}, {$set: params}, function (err, models) {
+            res.json(models);
+        });
+
+    });
 
     app.get('/description/remove/copy/:user/:descriptionsId', function (req, res) {
 
@@ -119,6 +133,7 @@ module.exports = function (app) {
     app.post('/descriptions/:from/:limit', function (req, res) {
         console.log(req.body);
         Description.find(req.body, function (err, models) {
+            console.log(models);
             res.json(models);
         }).skip(parseInt(req.params.from)).limit(parseInt(req.params.limit));
     });
