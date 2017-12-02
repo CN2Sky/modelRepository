@@ -88,10 +88,10 @@ module.exports = function (app) {
         });
     });
 
-    app.get('/models', function (req, res) {
-        Model.find({}, function (err, models) {
+    app.post('/models/descriptions/:from/:limit', function (req, res) {
+        Model.find({descriptionId: {$in: req.body}}, function (err, models) {
             res.json(models);
-        });
+        }).skip(parseInt(req.params.from)).limit(parseInt(req.params.limit));
     });
 
 
