@@ -60,14 +60,14 @@ module.exports = function (app) {
             }, function (err, response, body) {
 
                 let test = {
-                    user : req.body.user,
-                    testing_data : req.body.testing_data,
+                    user: req.body.user,
+                    testing_data: req.body.testing_data,
                     result: body,
                     createdOn: new Date()
                 };
 
-                Model.update( { _id: req.body.modelId }, { $push: { tests: test } } , function(err, doc){
-                    if (err) return res.send(500, { error: err });
+                Model.update({_id: req.body.modelId}, {$push: {tests: test}}, function (err, doc) {
+                    if (err) return res.send(500, {error: err});
                     return res.send(doc);
                 });
             });
@@ -89,7 +89,26 @@ module.exports = function (app) {
     });
 
     app.post('/models/descriptions/:from/:limit', function (req, res) {
-        Model.find({descriptionId: {$in: req.body}}, function (err, models) {
+
+        let filters = {};
+        filters.descriptionId = {$in: req.body.ids};
+        for (let [key, value] of Object.entries(req.body.filters)) {
+            console.log(typeof(value));
+
+            if (value && typeof(value) !== "boolean") {
+                filters[key] = {$regex: ".*" + value + ".*"};
+            }
+            if(typeof(value) === "boolean" && value) {
+                filters[key] = value;
+            }
+
+        }
+        console.log(req.body);
+        console.log(filters);
+
+
+
+        Model.find(filters, function (err, models) {
             res.json(models);
         }).skip(parseInt(req.params.from)).limit(parseInt(req.params.limit));
     });
