@@ -129,6 +129,45 @@ module.exports = function (app) {
         });
     });
 
+    app.get('/vinnsl_descriptions/:descriptionId', function (req, res) {
+        Description.find({descriptionId: req.params.descriptionId}, function (err, models) {
+
+            let vinnsl_description = {
+                metadata: {
+                    paradigm : "Paradigm",
+                    name : models.name,
+                    description: "Description",
+                    version: {
+                        major: "0",
+                        minor: "0"
+                    }
+                },
+                creator : {
+                    name: models.createdBy,
+                    contact: "contanct@gmail.com"
+                },
+                problemDomain:{
+                    propagationType: {
+                        learningType: "fastforward"
+                    },
+                    problemType: models.domain
+                },
+                endpoints:{
+                    train: {type:Boolean, Default: true},
+                    retrain: {type:Boolean, Default: true},
+                    test: {type:Boolean, Default: true}
+                },
+                parameters: [models.modelParameters],
+                data:{
+                    description: models.inputType,
+                    tableDescription: model.inputDimensions,
+                    fileDescription: {type: String}
+                }
+            };
+            //res.set('Content-Type', 'application/xml');
+            res.json(vinnsl_description);
+        });
+    });
 
     app.post('/descriptions/:from/:limit', function (req, res) {
         console.log(req.body);
