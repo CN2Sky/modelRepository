@@ -130,7 +130,7 @@ module.exports = function (app) {
     });
 
     app.get('/vinnsl_descriptions/:descriptionId', function (req, res) {
-        Description.find({descriptionId: req.params.descriptionId}, function (err, models) {
+        Description.findById(req.params.descriptionId, function (err, models) {
 
             let vinnsl_description = {
                 metadata: {
@@ -160,7 +160,7 @@ module.exports = function (app) {
                 parameters: [models.modelParameters],
                 data:{
                     description: models.inputType,
-                    tableDescription: model.inputDimensions,
+                    tableDescription: models.inputDimensions,
                     fileDescription: {type: String}
                 }
             };
