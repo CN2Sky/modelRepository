@@ -1,6 +1,6 @@
 module.exports = function (app) {
 
-    let xmlify = require('xmlify');
+    let jsonxml = require('jsontoxml');
     let Description = require('./../models/Descriptions');
     let UserReferecedDescription = require('./../models/UserReferecedDescription');
 
@@ -158,15 +158,15 @@ module.exports = function (app) {
                     retrain: "true",
                     test: "true"
                 },
-                parameters: [models.modelParameters],
+                parameters: models.modelParameters,
                 data:{
                     description: models.inputType,
                     tableDescription: models.inputDimensions,
                     fileDescription: "no file needed"
                 }
             };
-            //res.set('Content-Type', 'application/xml');
-            res.send(xmlify(vinnsl_description));
+            res.set('Content-Type', 'application/xml');
+            res.send(jsonxml(vinnsl_description));
         });
     });
 
