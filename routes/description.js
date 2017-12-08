@@ -1,6 +1,6 @@
 module.exports = function (app) {
 
-    let jsonxml = require('jsontoxml');
+    var data2xml = require('data2xml');   
     let Description = require('./../models/Descriptions');
     let UserReferecedDescription = require('./../models/UserReferecedDescription');
 
@@ -132,8 +132,11 @@ module.exports = function (app) {
 
     app.get('/vinnsl_descriptions/:descriptionId', function (req, res) {
         Description.findById(req.params.descriptionId, function (err, models) {
-
-            let vinnsl_description = {
+        
+	let convert  = data2xml();
+            
+	let model_parameters = JSON.parse(JSON.stringify(models.modelParameters));
+	let vinnsl_description = {
                 metadata: {
                     paradigm : "Paradigm",
                     name : models.name,
@@ -158,15 +161,16 @@ module.exports = function (app) {
                     retrain: "true",
                     test: "true"
                 },
-                parameters: models.modelParameters,
+                parameters: JSON.parse(JSON.stringify(models.modelParameters)),
                 data:{
                     description: models.inputType,
                     tableDescription: models.inputDimensions,
                     fileDescription: "no file needed"
                 }
             };
+	    //res.send(model_parameters);
             res.set('Content-Type', 'application/xml');
-            res.send(jsonxml(vinnsl_description));
+            res.send(convert('description', vinnsl_description));
         });
     });
 
