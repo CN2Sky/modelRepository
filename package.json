@@ -16,7 +16,8 @@
     "mongoose": "4.7.4",
     "morgan": "~1.6.1",
     "querystring": "^0.2.0",
-    "request": "^2.83.0"
+    "request": "^2.83.0",
+    "xmlify": "^1.1.0"
   },
   "license": "ISC",
   "devDependencies": {
