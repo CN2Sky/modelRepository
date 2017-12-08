@@ -1,7 +1,7 @@
 module.exports = function (app) {
 
     let Model = require('./../models/Model');
-    let Model = require('./../models/ViNNSL_Description');
+    let Vinnsl_model = require('./../models/ViNNSL_Description');
     let request = require('request');
     let querystring = require('querystring');
 

@@ -1,5 +1,6 @@
 module.exports = function (app) {
 
+    let xmlify = require('xmlify');
     let Description = require('./../models/Descriptions');
     let UserReferecedDescription = require('./../models/UserReferecedDescription');
 
@@ -153,19 +154,19 @@ module.exports = function (app) {
                     problemType: models.domain
                 },
                 endpoints:{
-                    train: {type:Boolean, Default: true},
-                    retrain: {type:Boolean, Default: true},
-                    test: {type:Boolean, Default: true}
+                    train: "true",
+                    retrain: "true",
+                    test: "true"
                 },
                 parameters: [models.modelParameters],
                 data:{
                     description: models.inputType,
                     tableDescription: models.inputDimensions,
-                    fileDescription: {type: String}
+                    fileDescription: "no file needed"
                 }
             };
             //res.set('Content-Type', 'application/xml');
-            res.json(vinnsl_description);
+            res.send(xmlify(vinnsl_description));
         });
     });
 
