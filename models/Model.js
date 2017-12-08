@@ -21,7 +21,7 @@ let Model = new Schema({
     modelParameters: {},
     tests: [test],
     isCopy: Boolean,
-    copiedBy: {type: String}
+    copiedFromModelId: String
 });
 
 // set up a mongoose model and pass it using module.exports

@@ -31,6 +31,8 @@ module.exports = function (app) {
                 accuracy: req.body.accuracy,
                 modelParameters: req.body.modelParameters,
                 model: JSON.parse(body),
+                isCopy: req.body.isCopy ? req.body.isCopy : false,
+                copiedFromModelId: req.body.copiedFromModelId ? req.body.copiedFromModelId : null,
                 tests: []
             });
 
@@ -91,26 +93,28 @@ module.exports = function (app) {
     app.post('/models/descriptions/:from/:limit', function (req, res) {
 
         let filters = {};
-        filters.descriptionId = {$in: req.body.ids};
-        for (let [key, value] of Object.entries(req.body.filters)) {
-            console.log(typeof(value));
+        if (req.body.ids) {
+            filters.descriptionId = {$in: req.body.ids};
+        }
+        if (req.body.filters) {
+            for (let [key, value] of Object.entries(req.body.filters)) {
+                console.log(typeof(value));
 
-            if (value && typeof(value) !== "boolean") {
-                filters[key] = {$regex: ".*" + value + ".*"};
-            }
-            if(typeof(value) === "boolean" && value) {
-                filters[key] = value;
-            }
+                if (value && typeof(value) !== "boolean") {
+                    filters[key] = {$regex: ".*" + value + ".*"};
+                }
+                if (typeof(value) === "boolean" && value) {
+                    filters[key] = value;
+                }
 
+            }
         }
         console.log(req.body);
         console.log(filters);
 
-
-
         Model.find(filters, function (err, models) {
             res.json(models);
-        }).skip(parseInt(req.params.from)).limit(parseInt(req.params.limit));
+        }).skip(parseInt(req.params.from)).limit(parseInt(req.params.limit)).sort({trainedOn: 'desc'});
     });
 
 

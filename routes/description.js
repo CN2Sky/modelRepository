@@ -131,8 +131,29 @@ module.exports = function (app) {
 
 
     app.post('/descriptions/:from/:limit', function (req, res) {
-        console.log(req.body);
-        Description.find(req.body, function (err, models) {
+
+
+        let filters = {};
+
+        if (req.body.filters) {
+            for (let [key, value] of Object.entries(req.body.filters)) {
+                console.log(typeof(value));
+
+                if (value && typeof(value) !== "boolean") {
+                    filters[key] = {$regex: ".*" + value + ".*"};
+                }
+                if (typeof(value) === "boolean" && value) {
+                    filters[key] = value;
+                }
+
+            }
+        }
+
+        Object.assign(filters, req.body.static_filters);
+
+        console.log(filters);
+
+        Description.find(filters, function (err, models) {
             console.log(models);
             res.json(models);
         }).skip(parseInt(req.params.from)).limit(parseInt(req.params.limit));
