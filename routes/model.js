@@ -1,6 +1,7 @@
 module.exports = function (app) {
 
     let Model = require('./../models/Model');
+    let Vinnsl_model = require('./../models/ViNNSL_Description');
     let request = require('request');
     let querystring = require('querystring');
 
@@ -83,6 +84,7 @@ module.exports = function (app) {
             res.json(models);
         });
     });
+
 
     app.get('/models/id/:modelId', function (req, res) {
         Model.findById(req.params.modelId, function (err, model) {
