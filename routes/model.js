@@ -111,7 +111,8 @@ module.exports = function (app) {
 
             }
         }
-        console.log(req.body);
+        Object.assign(filters, req.body.static_filters);
+
         console.log(filters);
 
         Model.find(filters, function (err, models) {
