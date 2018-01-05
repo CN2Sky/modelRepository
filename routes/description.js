@@ -105,7 +105,6 @@ module.exports = function (app) {
 
     });
 
-
     app.get('/description/references/:user', function (req, res) {
 
         UserReferecedDescription.findOne({user: req.params.user}, function (err, response) {
