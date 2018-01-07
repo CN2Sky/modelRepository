@@ -75,8 +75,41 @@ module.exports = function (app) {
         });
     });
 
+    app.delete('/project/nn/:nnId', function (req, res) {
+        Project.update({}, {$pull: {"nn_descriptions_id": req.body.nnId}}, function (err, models) {
+            VINNSL_Description_NN.findByIdAndRemove(req.params.nnId, function (e, r) {
+                console.log(e);
+                console.log(r);
+                res.send(r);
+            });
+        });
+
+
+    });
+
+    app.delete('/project/:id', function (req, res) {
+        Project.findByIdAndRemove(req.params.id, function (err, doc) {
+            if (doc.nn_descriptions_id && doc.nn_descriptions_id.length > 0) {
+                VINNSL_Description_NN.remove({_id: {$in: doc.nn_descriptions_id}}, function (e, r) {
+                    console.log(e);
+                    console.log(r);
+                    res.send(r);
+                });
+            } else {
+                res.send(doc);
+            }
+
+        })
+    });
+
     app.post('/project/add_nn_id/:id', function (req, res) {
         Project.update({_id: req.params.id}, {$push: {"nn_descriptions_id": req.body.nn_id}}, function (err, models) {
+            res.json(models);
+        });
+    });
+
+    app.post('/project/delete_nn_id/:id', function (req, res) {
+        Project.update({_id: req.params.id}, {$pull: {"nn_descriptions_id": req.body.nn_id}}, function (err, models) {
             res.json(models);
         });
     });

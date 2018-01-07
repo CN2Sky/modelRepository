@@ -129,49 +129,6 @@ module.exports = function (app) {
         });
     });
 
-    app.get('/vinnsl_descriptions/:descriptionId', function (req, res) {
-        Description.findById(req.params.descriptionId, function (err, models) {
-        
-	let convert  = data2xml();
-            
-	let model_parameters = JSON.parse(JSON.stringify(models.modelParameters));
-	let vinnsl_description = {
-                metadata: {
-                    paradigm : "Paradigm",
-                    name : models.name,
-                    description: "Description",
-                    version: {
-                        major: "0",
-                        minor: "0"
-                    }
-                },
-                creator : {
-                    name: models.createdBy,
-                    contact: "contanct@gmail.com"
-                },
-                problemDomain:{
-                    propagationType: {
-                        learningType: "fastforward"
-                    },
-                    problemType: models.domain
-                },
-                endpoints:{
-                    train: "true",
-                    retrain: "true",
-                    test: "true"
-                },
-                parameters: JSON.parse(JSON.stringify(models.modelParameters)),
-                data:{
-                    description: models.inputType,
-                    tableDescription: models.inputDimensions,
-                    fileDescription: "no file needed"
-                }
-            };
-	    //res.send(model_parameters);
-            res.set('Content-Type', 'application/xml');
-            res.send(convert('description', vinnsl_description));
-        });
-    });
 
     app.post('/descriptions/:from/:limit', function (req, res) {
 

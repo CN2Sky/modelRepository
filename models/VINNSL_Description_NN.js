@@ -34,6 +34,11 @@ let endpoints = new Schema({
     endpoint: String
 });
 
+let image = new Schema({
+    imageType: String,
+    endpoint: String
+});
+
 let VINNSL_Description_NN = new Schema({
     metadata: {
         name: {type: String},
@@ -85,7 +90,8 @@ let VINNSL_Description_NN = new Schema({
         lastRun: Date,
         isRunning: {type: Boolean, Default: false},
         hardware: String,
-        isPublic: Boolean
+        isPublic: Boolean,
+        image: image
     }
 });
 
