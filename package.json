@@ -17,6 +17,7 @@
     "method-override": "~2.3.5",
     "mongoose": "4.7.4",
     "morgan": "~1.6.1",
+    "parse-csv": "^0.2.0",
     "querystring": "^0.2.0",
     "request": "^2.83.0",
     "x2js": "^3.1.1",
