@@ -56,7 +56,8 @@ module.exports = function (app) {
                 }
             },
             parameters: {
-                input: req.body.parameters.input
+                input: req.body.parameters.input,
+                output: req.body.parameters.output
             },
             data: {
                 description: req.body.data.description,
@@ -196,8 +197,8 @@ module.exports = function (app) {
         let endpoints = [];
         if (req.body.isCloudify) {
             // TODO CLOUDIFY DEPLOYMENT  !!!!!!!
-            endpoints.push({name: 'train', 'endpoint': 'localhost:8080/train'});
-            endpoints.push({name: 'test', 'endpoint': 'localhost:8080/test'});
+            endpoints.push({name: 'train', 'endpoint': 'http://192.168.0.102:5000/train'});
+            endpoints.push({name: 'test', 'endpoint': 'http://192.168.0.102:5000/test'});
         } else {
             endpoints.push({name: 'train', 'endpoint': req.body.endpoint + '/train'});
             endpoints.push({name: 'test', 'endpoint': req.body.endpoint + '/test'});

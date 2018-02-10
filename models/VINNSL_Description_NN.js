@@ -14,7 +14,8 @@ let parameters = new Schema({
 
 let connectionsShortcuts = {
     from: String,
-    to: String
+    to: String,
+    isFullConnected: Boolean
 };
 
 let inputOutputLayer = new Schema({
@@ -78,8 +79,8 @@ let VINNSL_Description_NN = new Schema({
         }
     },
     parameters: {
-        input: [parameters]
-
+        input: [parameters],
+        output: String
     },
     data: {
         description: {type: String},

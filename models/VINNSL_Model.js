@@ -27,13 +27,14 @@ let VinnslModel = new Schema({
     trainedBy: String,
     trainedOn: Date,
     parameters: {
-        input: [parameters]
-
+        input: [parameters],
+        output: String
     },
     endpoints: [endpoints],
     tests: [test],
     isCopy: Boolean,
     copiedFromModelId: String,
+    training_data: String,
     logs: {}
 });
 
