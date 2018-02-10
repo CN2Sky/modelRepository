@@ -6,7 +6,8 @@ let Project = new Schema({
     createdOn: Date,
     name: String,
     description: String,
-    nn_descriptions_id: [String]
+    nn_descriptions_id: [String],
+    nn_models_id:[String]
 
 });
 

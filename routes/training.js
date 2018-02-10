@@ -126,6 +126,9 @@ module.exports = function (app) {
                 if (typeof(value) === "boolean" && value) {
                     filters[key] = value;
                 }
+                if (value && typeof value === 'object' && value.constructor === Array) {
+                    filters[key] = {$in: value};
+                }
 
             }
         }

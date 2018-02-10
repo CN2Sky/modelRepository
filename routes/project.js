@@ -11,7 +11,9 @@ module.exports = function (app) {
             name: req.body.name,
             description: req.body.description,
             nn_ids_paradigms: [],
-            nn_ids_developed: []
+            nn_ids_developed: [],
+            nn_models_id: [],
+            nn_descriptions_id: []
         });
 
         project.save(function (err, obj) {
@@ -110,6 +112,18 @@ module.exports = function (app) {
 
     app.post('/project/delete_nn_id/:id', function (req, res) {
         Project.update({_id: req.params.id}, {$pull: {"nn_descriptions_id": req.body.nn_id}}, function (err, models) {
+            res.json(models);
+        });
+    });
+
+    app.post('/project/add_model_id/:id', function (req, res) {
+        Project.update({_id: req.params.id}, {$push: {"nn_models_id": req.body.model_id}}, function (err, models) {
+            res.json(models);
+        });
+    });
+
+    app.post('/project/add_model_id/:id', function (req, res) {
+        Project.update({_id: req.params.id}, {$push: {"nn_models_id": req.body.model_id}}, function (err, models) {
             res.json(models);
         });
     });
