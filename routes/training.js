@@ -127,7 +127,7 @@ module.exports = function (app) {
                     filters[key] = value;
                 }
                 if (value && typeof value === 'object' && value.constructor === Array) {
-                    filters[key] = {$in: response.nn_descriptions_id};
+                    filters[key] = {$in: value};
                 }
 
             }
