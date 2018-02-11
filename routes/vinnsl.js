@@ -121,6 +121,7 @@ module.exports = function (app) {
             structure: req.body.structure,
             connections: req.body.connections,
             parameters: {
+                output: req.body.parameters.output,
                 input: req.body.parameters.input
             },
             data: {
@@ -181,7 +182,7 @@ module.exports = function (app) {
         VINNSL_Description_NN.find(filters, function (err, models) {
             console.log(models);
             res.json(models);
-        }).skip(parseInt(req.params.from)).limit(parseInt(req.params.limit));
+        }).skip(parseInt(req.params.from)).limit(parseInt(req.params.limit)).sort({createdOn: 'desc'});
     });
 
     app.get('/vinnsl/description/:id', function (req, res) {

@@ -45,6 +45,7 @@ let VINNSL_Description_NN = new Schema({
         name: {type: String},
         description: {type: String},
         paradigm: {type: String},
+        createdOn: Date,
         version: {
             major: {type: String},
             minor: {type: String}

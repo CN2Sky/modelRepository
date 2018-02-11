@@ -140,7 +140,7 @@ module.exports = function (app) {
         VinnslModel.find(filters, function (err, models) {
             console.log(models);
             res.json(models);
-        }).skip(parseInt(req.params.from)).limit(parseInt(req.params.limit));
+        }).skip(parseInt(req.params.from)).limit(parseInt(req.params.limit)).sort({trainedOn: 'desc'});
 
     });
 
