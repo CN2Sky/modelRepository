@@ -1,0 +1,5 @@
+{
+  "logs_host": "http://192.168.0.102:5000/logs/",
+  "db_endpoint": "mongodb://192.168.0.102:27017/n2sky",
+  "neural_network_host": "http://192.168.0.102:5000"
+}

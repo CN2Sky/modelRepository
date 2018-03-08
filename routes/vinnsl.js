@@ -1,3 +1,5 @@
+const host = require('./../HOST.json');
+
 module.exports = function (app) {
 
     let VINNSL_Description_NN = require('./../models/VINNSL_Description_NN');
@@ -198,8 +200,8 @@ module.exports = function (app) {
         let endpoints = [];
         if (req.body.isCloudify) {
             // TODO CLOUDIFY DEPLOYMENT  !!!!!!!
-            endpoints.push({name: 'train', 'endpoint': 'http://192.168.0.102:5000/train'});
-            endpoints.push({name: 'test', 'endpoint': 'http://192.168.0.102:5000/test'});
+            endpoints.push({name: 'train', 'endpoint': host.neural_network_host + '/train'});
+            endpoints.push({name: 'test', 'endpoint': host.neural_network_host + '/test'});
         } else {
             endpoints.push({name: 'train', 'endpoint': req.body.endpoint + '/train'});
             endpoints.push({name: 'test', 'endpoint': req.body.endpoint + '/test'});

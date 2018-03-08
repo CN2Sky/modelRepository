@@ -1,3 +1,5 @@
+const host = require('./../HOST.json');
+
 module.exports = function (app) {
 
     let csv = require('parse-csv');
@@ -46,7 +48,7 @@ module.exports = function (app) {
                     if (err_py) return;
 
 
-                    request('http://192.168.0.102:5000/logs/' + obj._id.toString(), function (logs_err, logs_response, logs_body) {
+                    request(host.logs_host + obj._id.toString(), function (logs_err, logs_response, logs_body) {
                         let params = {
                             isTrainingDone: true,
                             rawModel: body,
